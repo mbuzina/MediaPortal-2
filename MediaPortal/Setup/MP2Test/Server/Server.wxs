@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:fire="http://schemas.microsoft.com/wix/FirewallExtension">
+
+  <Fragment>
+
+    <?include ..\Includes.wxi ?>
+
+    <!-- Directories -->
+    <DirectoryRef Id="INSTALLDIR_SERVER" FileSource="$(var.OutDirServer)">
+
+      <Directory Id="S__Defaults" Name="Defaults">
+        <Component Id="S__Defaults" Guid="9894844B-C89B-4F8D-A905-751B836A5DF3">
+          <File Id="S__Paths.xml" Name="Paths.xml" KeyPath="yes" Checksum="yes" />
+        </Component>
+
+        <Component Id="InstallDirServerRegistry" Guid="AB85C3C6-423A-484D-93B6-60A24057E683">
+          <RegistryKey Root="HKLM"
+                       Key="Software\[Manufacturer]\[ProductName]"
+                       Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="string" Name="INSTALLDIR_SERVER" Value="[INSTALLDIR_SERVER]"/>
+          </RegistryKey>
+          <CreateFolder />
+        </Component>
+      </Directory>
+
+      <Component Id="MP2Server" Guid="3AF13E59-DC3A-4C6F-A0EB-89462019140C">
+        <File Id="MP2Server.exe" Name="MP2-Server.exe" KeyPath="yes" Checksum="yes">
+          <fire:FirewallException Id="MP2ServerExTCPDom" Name="MP2-Server TCP Domain" Profile="domain" Protocol="tcp" Scope="any" IgnoreFailure="yes" />
+          <fire:FirewallException Id="MP2ServerExTCPPriv" Name="MP2-Server TCP Private" Profile="private" Protocol="tcp" Scope="any" IgnoreFailure="yes" />
+          <fire:FirewallException Id="MP2ServerExUDPDom" Name="MP2-Server UDP Domain" Profile="domain" Protocol="udp" Scope="any" IgnoreFailure="yes" />
+          <fire:FirewallException Id="MP2ServerExUDPPriv" Name="MP2-Server UDP Private" Profile="private" Protocol="udp" Scope="any" IgnoreFailure="yes" />
+        </File>
+      </Component>
+      <Component Id="MP2Server.config" Guid="1015AFE2-59B7-47B0-A1F8-F96053572A6F">
+        <File Id="MP2Server.exe.config" Name="MP2-Server.exe.config" KeyPath="yes" Checksum="yes" />
+      </Component>
+
+    </DirectoryRef>
+
+    <!-- Shortcuts -->
+    <DirectoryRef Id="MP2StartMenu">
+      <Component Id="MP2Server.StartMenu.Shortcut" Guid="6A4D291B-5143-48F5-A277-65DAAE31623F">
+        <Shortcut Id="MP2Server.StartMenu.Shortcut"
+                  Name="!(loc.SC_Server)"
+                  Description="!(loc.SC_Server_Desc)"
+                  Target="[!MP2Server.exe]"
+                  Icon="MediaPortal2ServerIcon" 
+                  WorkingDirectory="INSTALLDIR_SERVER" />
+        <!--
+        Fix ICE 38 by adding a dummy registry key that is the key for this shortcut.
+        http://msdn.microsoft.com/library/en-us/msi/setup/ice38.asp
+        -->
+        <RegistryValue Root="HKCU"
+                       Key="$(var.RegKeyInstall)"
+                       Name="MP2Server.StartMenu.Shortcut"
+                       Type="string"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="MP2Server.Desktop.Shortcut" Guid="751AD25F-D690-4C01-8915-CD5DA4029F8E">
+        <Shortcut Id="MP2Server.Desktop.Shortcut"
+                  Name="!(loc.SC_Server)"
+                  Description="!(loc.SC_Server_Desc)"
+                  Target="[!MP2Server.exe]"
+                  Icon="MediaPortal2ServerIcon"
+                  WorkingDirectory="INSTALLDIR_SERVER" />
+        <!--
+        Fix ICE 38 by adding a dummy registry key that is the key for this shortcut.
+        http://msdn.microsoft.com/library/en-us/msi/setup/ice38.asp
+        -->
+        <RegistryValue Root="HKCU"
+                       Key="$(var.RegKeyInstall)"
+                       Name="MP2Server.Desktop.Shortcut"
+                       Type="string"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+  </Fragment>
+</Wix>

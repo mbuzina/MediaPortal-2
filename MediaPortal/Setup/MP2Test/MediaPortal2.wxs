@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+  <!-- This should NEVER be changed ! -->
+  <?define UpgradeCode = "9743129C-FED3-404A-A66E-3C1557BE0178" ?>
+
+  <Product Id="*"
+           Name="MediaPortal 2"
+           Version="2.0.0.0"
+           Manufacturer="Team MediaPortal"
+           Language="!(loc.ProductLanguage)"
+           Codepage="0"
+           UpgradeCode="$(var.UpgradeCode)">
+
+    <Package Id='*'
+             Keywords='Installer'
+             Description='MediaPortal 2 Installer'
+             InstallerVersion='450'
+             SummaryCodepage="!(loc.SummaryCodepage)"
+             Compressed='yes' />
+
+    <PropertyRef Id="UpgradesFile" />
+
+    <?Include .\Includes.wxi?>
+
+    <PropertyRef Id="PropertiesFile" />
+    <PropertyRef Id="AddRemovePropertiesFile" />
+    <PropertyRef Id="LaunchConditionsFile" />
+
+    <!--
+    Source media for the installation.
+    Specifies a single cab file to be embedded in the installer's .msi.
+    -->
+    <Media Id="1" Cabinet="MediaPortal2.cab" EmbedCab="yes" CompressionLevel="high" />
+
+    <!-- setting the context to per-machine -->
+    <Property Id="ALLUSERS">1</Property>
+
+    <Icon Id="MediaPortal2Icon" SourceFile="$(var.SolutionDir)..\Resources\Images\MP2_Icon_General.ico" />
+    <Icon Id="MediaPortal2ClientIcon" SourceFile="$(var.SolutionDir)..\Bin\MP2-Client\bin\x86\Release\MP2-Client.exe" />
+    <Icon Id="MediaPortal2ServerIcon" SourceFile="$(var.SolutionDir)..\Bin\MP2-Server\bin\x86\Release\MP2-Server.exe" />
+
+    <!-- Directories -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="TeamMediaPortalFolder" Name="Team MediaPortal">
+          <!-- An empty Component needed to avoid a bug in Windows Installer -->
+          <Component Id="EmptyComponent_WindowsInstallerBugWorkaround" KeyPath="yes" Guid="4D1E4904-0FB1-44B3-82E1-CFE5F01E6AC3"/>
+
+          <Directory Id="INSTALLDIR_CLIENT" Name="MP2-Client">
+            <Directory Id="CLIENT.PLUGINS.FOLDER" Name="Plugins"/>
+          </Directory>
+
+          <Directory Id="INSTALLDIR_SERVER" Name="MP2-Server">
+            <Directory Id="SERVER.PLUGINS.FOLDER" Name="Plugins"/>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="CommonAppDataFolder">
+        <Directory Id="TeamMediaPortal.DATA.FOLDER" Name="Team MediaPortal">
+          <Component Id="TeamMediaPortal.DATA.FOLDER" Guid="F681F96B-A41D-435B-A091-C9BF42179FB5">
+            <CreateFolder Directory="TeamMediaPortal.DATA.FOLDER">
+              <util:PermissionEx User="Users" GenericAll="yes"/>
+            </CreateFolder>
+          </Component>
+
+
+          <Directory Id="CLIENT.DATA.FOLDER" Name="MP2-Client">
+            <Component Id="CLIENT.DATA.FOLDER" Guid="3DF62027-81C3-4047-815C-4C530E0328EB">
+              <CreateFolder/>
+            </Component>
+          </Directory>
+
+          <Directory Id="SERVER.DATA.FOLDER" Name="MP2-Server">
+            <Component Id="SERVER.DATA.FOLDER" Guid="4C918D8D-9925-49D9-8CC9-0369A32F6221">
+              <CreateFolder/>
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="TeamMediaPortalStartMenu" Name="Team MediaPortal">
+          <Directory Id="MP2StartMenu" Name="MediaPortal 2" />
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder" />
+    </Directory>
+
+    <!-- Shortcuts -->
+    <DirectoryRef Id="TeamMediaPortalStartMenu">
+      <Component Id="TeamMediaPortalStartMenu" Guid="EBCECF2A-3330-11E1-BB19-75D94724019B">
+        <RemoveFolder Id="TeamMediaPortalStartMenu" On="uninstall"/>
+        <RegistryValue Root="HKCU"
+                       Key="Software\Team MediaPortal\MediaPortal 2\Install"
+                       Name="TeamMediaPortalStartMenu"
+                       Type="string"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="MP2StartMenu">
+      <Component Id="MP2StartMenu" Guid="DB88BD5D-BD35-402E-ABD5-A8EBB1F0FA42">
+        <Shortcut Id="MP2Uninstall.StartMenu.Shortcut"
+                  Name="!(loc.SC_Uninstall)"
+                  Description="!(loc.SC_Uninstall_Desc)"
+                  Target="[System64Folder]msiexec.exe"
+                  Arguments="/x [ProductCode]" />
+        <!--
+        Fix ICE 38 by adding a dummy registry key that is the key for this shortcut.
+        http://msdn.microsoft.com/library/en-us/msi/setup/ice38.asp
+        -->
+        <!-- todo: why is $(var.RegKeyInstall) not working here? -->
+        <RegistryValue Root="HKCU"
+                       Key="Software\Team MediaPortal\MediaPortal 2\Install"
+                       Name="MP2StartMenu"
+                       Type="string"
+                       Value="1"
+                       KeyPath="yes" />
+        <RemoveFolder Id="Remove.MP2StartMenu"
+                      On="uninstall" />
+      </Component>
+    </DirectoryRef>
+
+    <!-- Features -->
+    <Feature Id="MediaPortal_2"
+             Level="1"
+             AllowAdvertise="no"
+             Display="expand"
+             Title="!(loc.F_MediaPortal)"
+             Description="!(loc.F_MediaPortal_Desc)">
+      <FeatureRef Id="Client" />
+      <FeatureRef Id="Server" />
+
+      <ComponentRef Id="EmptyComponent_WindowsInstallerBugWorkaround"/>
+      <ComponentRef Id="TeamMediaPortal.DATA.FOLDER" />
+      <ComponentRef Id="TeamMediaPortalStartMenu" />
+      <ComponentRef Id="MP2StartMenu" />
+    </Feature>
+
+    <InstallUISequence>
+
+      <Custom Action="ReadCustomPathsFromExistingPathsFile" Before="CostFinalize">NOT Installed</Custom>
+
+    </InstallUISequence>
+
+    <InstallExecuteSequence>
+      <!-- Reads custom paths which maybe have been changed by the user in a former installation -->
+      <Custom Action="ReadCustomPathsFromExistingPathsFile" Before="PrepareXmlPathVariables">(NOT Installed) AND (INSTALLTYPE_CUSTOM = 0)</Custom>
+
+      <Custom Action="PrepareXmlPathVariables" Before="FileCost">NOT Installed</Custom>
+      <!--<Custom Action="AttachClientToServer" After="InstallFinalize">NOT Installed</Custom>-->
+
+      <RemoveExistingProducts After="InstallInitialize" />
+      <InstallExecute After="RemoveExistingProducts" />
+    </InstallExecuteSequence>
+
+  </Product>
+</Wix>

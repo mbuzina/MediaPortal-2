@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:fire="http://schemas.microsoft.com/wix/FirewallExtension">
+
+  <Fragment>
+
+    <?include ..\Includes.wxi ?>
+
+    <!-- Directories -->
+    <DirectoryRef Id="INSTALLDIR_CLIENT" FileSource="$(var.OutDirClient)">
+
+      <Directory Id="Defaults" Name="Defaults">
+        <Component Id="Defaults" Guid="8B5A0635-DF72-4668-96BC-3F9CDDDFA5FF">
+          <File Id="Paths.xml" Name="Paths.xml" KeyPath="yes" Checksum="yes" />
+        </Component>
+
+        <!-- Albert, 2012-03-04: If we would let the user change the custom paths, we could write them here to the Paths.xml file.
+                                 We would need to call our custom action PrepareXmlPathVariables(). -->
+        <!--
+        <Component Id="WriteCustomClientPaths" Guid="52711D1B-E2EE-4ACD-9993-F5B3FCF87701">
+          <?foreach LABEL in $(var.ClientPathLabels)?>
+          <util:XmlFile Id="WriteCustomClientPaths_$(var.LABEL)"
+                        Action="setValue" File="[Defaults]\Paths.xml"
+                        ElementPath="//Paths/Path[\[]@name='$(var.LABEL)'[\]]"
+                        Value="[XML.CLIENT.$(var.LABEL).FOLDER]" Name="value" SelectionLanguage="XPath" />
+          <?endforeach?>
+        </Component>
+        -->
+
+        <Component Id="InstallDirClientRegistry" Guid="52711D1B-E2EE-4ACD-9993-F5B3FCF87701">
+          <RegistryKey Root="HKLM"
+                       Key="Software\[Manufacturer]\[ProductName]"
+                       Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="string" Name="INSTALLDIR_CLIENT" Value="[INSTALLDIR_CLIENT]"/>
+          </RegistryKey>
+          <CreateFolder />
+        </Component>
+      </Directory>
+
+      <Component Id="MP2Client" Guid="15EAC789-4F3A-4F65-B758-92562DB7C5AA">
+        <File Id="MP2Client.exe" Name="MP2-Client.exe" KeyPath="yes" Checksum="yes">
+          <fire:FirewallException Id="MP2ClientExTCPDom" Name="MP2-Client TCP Domain" Profile="domain" Protocol="tcp" Scope="any" IgnoreFailure="yes" />
+          <fire:FirewallException Id="MP2ClientExTCPPriv" Name="MP2-Client TCP Private" Profile="private" Protocol="tcp" Scope="any" IgnoreFailure="yes" />
+          <fire:FirewallException Id="MP2ClientExUDPDom" Name="MP2-Client UDP Domain" Profile="domain" Protocol="udp" Scope="any" IgnoreFailure="yes" />
+          <fire:FirewallException Id="MP2ClientExUDPPriv" Name="MP2-Client UDP Private" Profile="private" Protocol="udp" Scope="any" IgnoreFailure="yes" />
+        </File>
+      </Component>
+      <Component Id="MP2Client.config" Guid="D3FFB65D-0A46-4F34-8472-85466CD1067C">
+        <File Id="MP2Client.exe.config" Name="MP2-Client.exe.config" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="MP2Client.Splashscreen" Guid="B038F5DE-3940-46A9-AD12-C4142F826044">
+        <File Id="MP2Client.Splashscreen.jpg" Name="MP2 Client Splashscreen.jpg" KeyPath="yes" Checksum="yes" />
+      </Component>
+
+    </DirectoryRef>
+
+    <!-- Shortcuts -->
+    <DirectoryRef Id="MP2StartMenu">
+      <Component Id="MP2Client.StartMenu.Shortcut" Guid="1F79952A-464C-4E69-9C4F-F8F4488DE83F">
+        <Shortcut Id="MP2Client.StartMenu.Shortcut"
+                  Name="!(loc.SC_Client)"
+                  Description="!(loc.SC_Client_Desc)"
+                  Target="[!MP2Client.exe]"
+                  Icon="MediaPortal2ClientIcon" 
+                  WorkingDirectory="INSTALLDIR_CLIENT" />
+        <!--
+        Fix ICE 38 by adding a dummy registry key that is the key for this shortcut.
+        http://msdn.microsoft.com/library/en-us/msi/setup/ice38.asp
+        -->
+        <RegistryValue Root="HKCU"
+                       Key="$(var.RegKeyInstall)"
+                       Name="MP2Client.StartMenu.Shortcut"
+                       Type="string"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="MP2Client.Desktop.Shortcut" Guid="F005C623-CE3D-4ABD-A6DB-598D3859D58D">
+        <Shortcut Id="MP2Client.Desktop.Shortcut"
+                  Name="!(loc.SC_Client)"
+                  Description="!(loc.SC_Client_Desc)"
+                  Target="[!MP2Client.exe]"
+                  Icon="MediaPortal2ClientIcon"
+                  WorkingDirectory="INSTALLDIR_CLIENT" />
+        <!--
+        Fix ICE 38 by adding a dummy registry key that is the key for this shortcut.
+        http://msdn.microsoft.com/library/en-us/msi/setup/ice38.asp
+        -->
+        <RegistryValue Root="HKCU"
+                       Key="$(var.RegKeyInstall)"
+                       Name="MP2Client.Desktop.Shortcut"
+                       Type="string"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+  </Fragment>
+</Wix>

@@ -28,6 +28,8 @@
     <SuppressIces>ICE60;ICE80</SuppressIces>
     <LinkerAdditionalOptions>
     </LinkerAdditionalOptions>
+    <Cultures>
+    </Cultures>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Features\Client.wxs" />
