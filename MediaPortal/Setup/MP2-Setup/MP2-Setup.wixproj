@@ -30,7 +30,6 @@
     </LinkerAdditionalOptions>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Dokan\Dokan.wxs" />
     <Compile Include="Features\Client.wxs" />
     <Compile Include="Features\ClientFeatures.wxs" />
     <Compile Include="Features\Server.wxs" />
@@ -53,7 +52,6 @@
     <Content Include="xslt\PluginComponents2Features.xslt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dokan" />
     <Folder Include="Fragments" />
     <Folder Include="Language" />
     <Folder Include="Features" />

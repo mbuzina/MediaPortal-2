@@ -28,7 +28,6 @@
     <PropertyRef Id="PropertiesFile" />
     <PropertyRef Id="AddRemovePropertiesFile" />
     <PropertyRef Id="LaunchConditionsFile" />
-    <PropertyRef Id="DokanFile" />
     <PropertyRef Id="VCRedistFile" />
 
     <!--
@@ -59,10 +58,6 @@
           <Directory Id="INSTALLDIR_SERVER" Name="MP2-Server">
             <Directory Id="SERVER.PLUGINS.FOLDER" Name="Plugins"/>
           </Directory>
-        </Directory>
-
-        <Directory Id="DokanFolder" Name="Dokan">
-          <Directory Id="DokanLibraryFolder" Name="DokanLibrary"/>
         </Directory>
       </Directory>
 
@@ -198,18 +193,6 @@
 
       <Custom Action="PrepareXmlPathVariables" Before="FileCost">NOT Installed</Custom>
       <Custom Action="AttachClientToServer" After="InstallFinalize">NOT Installed</Custom>
-
-      <!-- Uninstall Dokan during installation, if dokan is out of date -->
-      <Custom Action="CA_UninstallDokan" After="InstallFiles">
-        NOT Installed AND DOKANINSTALLED AND
-        NOT (
-        (DOKANVERCHECK64 AND VersionNT64) OR (DOKANVERCHECK32 AND NOT VersionNT64)
-        )
-      </Custom>
-      <!-- Install Dokan, if correct version is not installed yet -->
-      <Custom Action="CA_InstallDokan" After="CA_UninstallDokan">
-        NOT (Installed OR (DOKANVERCHECK64 AND VersionNT64) OR (DOKANVERCHECK32 AND NOT VersionNT64))
-      </Custom>
 
       <RemoveExistingProducts After="InstallInitialize" />
       <InstallExecute After="RemoveExistingProducts" />
