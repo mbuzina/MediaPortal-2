@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+  <Fragment>
+    <PackageGroup
+        Id="Dokan">
+
+      <ExePackage
+          Id="DokanInstall"
+          Cache="no"
+          Compressed="no"
+          PerMachine="yes"
+          Permanent="yes"
+          Vital="yes"
+          SourceFile="$(var.SolutionDir)..\Source\External\Dokan\DokanInstall_0.5.3-customized.exe"
+          InstallCommand="/S"
+          DownloadUrl="https://raw.github.com/MediaPortal/MediaPortal-2/dev/MediaPortal/Source/External/Dokan/DokanInstall_0.5.3-customized.exe"/>
+
+    </PackageGroup>
+  </Fragment>
+</Wix>

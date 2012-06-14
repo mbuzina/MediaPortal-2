@@ -1,0 +1,48 @@
+﻿<Page x:Class="MediaPortal.InstallerUI.Views.InstallWelcomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      >
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!-- license checkbox -->
+    <CheckBox Grid.Row="0"
+              IsChecked="{Binding AcceptedLicense}">
+      <TextBlock>
+            I accept the 
+            <Hyperlink Command="{Binding ViewLicenseCommand}">
+              <TextBlock>License Aggreement</TextBlock>
+            </Hyperlink>.
+          </TextBlock>
+    </CheckBox>
+
+    <Button Grid.Row="1"
+                DataContext="{Binding InstallWelcomePageViewModel}"
+                Command="{Binding InstallSingleSeatCommand}"
+            >Install Client+Server (Single Seat)</Button>
+
+    <Button Grid.Row="2"
+                DataContext="{Binding InstallWelcomePageViewModel}"
+                Command="{Binding InstallClientOnlyCommand}"
+            >Client only</Button>
+
+    <Button Grid.Row="3"
+                DataContext="{Binding InstallWelcomePageViewModel}"
+                Command="{Binding InstallServerOnlyCommand}"
+            >Server only</Button>
+
+    <Label Grid.Row="4">
+      <Hyperlink Command="{Binding CustomizeInstallCommand}">
+        <TextBlock>Customize installation...</TextBlock>
+      </Hyperlink>
+    </Label>
+
+  </Grid>
+</Page>

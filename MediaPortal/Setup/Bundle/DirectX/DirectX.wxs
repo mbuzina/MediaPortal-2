@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  
+  <!--
+  There exists a webinstaller and a redistributable
+  
+    Webinstaller Info: http://www.microsoft.com/download/details.aspx?id=35
+             Download: http://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe
+               
+    Redistributable Info: http://www.microsoft.com/download/details.aspx?id=8109
+                Download: http://download.microsoft.com/download/8/4/A/84A35BF1-DAFE-4AE8-82AF-AD2AE20B6B14/directx_Jun2010_redist.exe
+  -->
+  
+  <Fragment>
+
+    <util:RegistrySearch
+      Root="HKLM"
+      Key="SOFTWARE\Microsoft\DirectX"
+      Value="InstalledVersion"
+      Result="exists"
+      Variable="RegistryDirectX"/>
+    
+    <util:FileSearch
+      Path="[WindowsFolder]\microsoft.net\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.dll"
+      Result="exists"
+      Variable="DirectX"/>
+    <util:FileSearch
+      Path="[WindowsFolder]\microsoft.net\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.Direct3D.dll"
+      Result="exists"
+      Variable="Direct3D"/>
+    <util:FileSearch
+      Path="[WindowsFolder]\microsoft.net\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.DirectDraw.dll"
+      Result="exists"
+      Variable="DirectDraw"/>
+    <util:FileSearch
+      Path="[WindowsFolder]\microsoft.net\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.DirectInput.dll"
+      Result="exists"
+      Variable="DirectInput"/>
+    <util:FileSearch
+      Path="[WindowsFolder]\microsoft.net\DirectX for Managed Code\1.0.2911.0\Microsoft.DirectX.Direct3DX.dll"
+      Result="exists"
+      Variable="Direct3DX"/>
+    <util:FileSearch
+      Path="[WindowsFolder]\System32\D3DX9_43.dll"
+      Result="exists"
+      Variable="D3DX9_43"/>
+
+    <PackageGroup
+        Id="DirectX">
+      <ExePackage
+          Id="DirectX"
+          Cache="no"
+          Compressed="no"
+          PerMachine="yes"
+          Permanent="yes"
+          Vital="yes"
+          SourceFile="DirectX\dxwebsetup.exe"
+          InstallCommand="/Q"
+          DownloadUrl="http://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe"
+          DetectCondition="RegistryDirectX AND DirectX AND Direct3D AND DirectDraw AND DirectInput AND Direct3DX AND D3DX9_43"/>
+
+    </PackageGroup>
+  </Fragment>
+</Wix>

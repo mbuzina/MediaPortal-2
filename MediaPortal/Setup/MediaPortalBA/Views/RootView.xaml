@@ -1,0 +1,61 @@
+﻿<Window x:Class="MediaPortal.InstallerUI.Views.RootView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Width="525"
+        Height="350">
+  
+  <Grid>
+    <Rectangle
+      MouseLeftButtonDown="Background_MouseLeftButtonDown"
+      Fill="#D200003E"
+      Grid.ColumnSpan="1"
+      Grid.Row="1"
+      />
+    
+    <Label Content="MediaPortal 2 installer"
+           Height="23"
+           Margin="18,12,0,0"
+           HorizontalAlignment="Left"
+           VerticalAlignment="Top"
+           />
+
+    <Button Content="_"
+            Command="{Binding MinimizeCommand}"
+            Height="23"
+            Width="27"
+            Margin="433,12,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            />
+    
+    <Button Content="X"
+            Command="{Binding CloseCommand}"
+            Height="23"
+            Width="27"
+            Margin="0,12,12,275"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            />
+
+    <Frame VerticalAlignment="Bottom"
+      Height="258"
+      Width="479"
+      Margin="12,0,0,0"
+      Name="frame1" NavigationUIVisibility="Hidden" />
+
+    <ComboBox
+      HorizontalAlignment="Left"
+      VerticalAlignment="Top"
+      Height="23"
+      Width="223"
+      Margin="152,12,0,0"
+      Name="comboBox1" SelectionChanged="comboBox1_SelectionChanged">
+      
+      <ComboBoxItem Content="1" />
+      <ComboBoxItem Content="2" />
+    </ComboBox>
+  </Grid>
+</Window>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:bal="http://schemas.microsoft.com/wix/BalExtension"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+  <?define Version = "2.0.0.0" ?>
+  <!-- todo: check what to do with upgrade code, same like MP2.msi? -->
+  <!-- for more infos see: http://neilsleightholm.blogspot.de/2012/05/wix-burn-tipstricks.html -->
+  <!-- This should NEVER be changed ! -->
+  <?define UpgradeCode = "9743129C-FED3-404A-A66E-3C1557BE0178" ?>
+  
+  <!-- Note: Splashscreen must be a bitmap. -->
+  <Bundle UpgradeCode="$(var.UpgradeCode)"
+          Name="MediaPortal 2" Version="$(var.Version)"
+          Manufacturer="Team MediaPortal"
+          Copyright="Copyright© 2012, Team MediaPortal"
+          IconSourceFile="$(var.SolutionDir)..\Resources\Images\MP2_Icon_General.ico"
+          SplashScreenSourceFile="Resources\SplashScreen.bmp"
+          HelpUrl="http://www.team-mediaportal.com"
+          AboutUrl="http://www.team-mediaportal.com"
+          >
+
+    <!-- todo: check whether we will be able to apply a tag. -->
+    <!--<swid:Tag Regid="regid.1991-06.com.microsoft" />-->
+    
+    <BootstrapperApplicationRef Id="ManagedBootstrapperApplicationHost">
+      <Payload Name="BootstrapperCore.config" SourceFile="$(var.MediaPortalBA.TargetDir)MediaPortalBA.BootstrapperCore.config"/>
+      <Payload SourceFile="$(var.MediaPortalBA.TargetPath)"/>
+      <Payload SourceFile='Resources\License.htm' />
+    </BootstrapperApplicationRef>
+    
+    <Variable Name='Features_AddLocal'
+              Type='string'
+              Value='Client,Server'/>
+    <Variable Name='ClientInstallDir'
+              Type='string'
+              Value='[ProgramFilesFolder]Team MediaPortal\MP2-Client'/>
+    <!--<Variable Name='ClientDataDir'
+              Type='string'
+              Value='[CommonAppDataFolder]Team MediaPortal\MP2-Client'/>-->
+    <Variable Name='ServerInstallDir'
+              Type='string'
+              Value='[ProgramFilesFolder]Team MediaPortal\MP2-Server'/>
+    <!--<Variable Name='ServerDataDir'
+              Type='string'
+              Value='[CommonAppDataFolder]Team MediaPortal\MP2-Server'/>-->
+    
+    <Chain>
+      <PackageGroupRef Id='NetFx40Web' />
+      <PackageGroupRef Id="DirectX"/>
+      <PackageGroupRef Id="Dokan"/>
+
+      <?if $(var.Configuration) = Test ?>
+      <?define MsiSource  = "$(var.SolutionDir)MP2Test\bin\Debug\en-us\MP2Test.msi"?>
+      <?else?>
+      <?define MsiSource  = "$(var.SolutionDir)MP2-Setup\bin\$(var.Configuration)\en-us\MP2-Setup.msi"?>
+      <?endif?>
+      
+      <!-- true -->
+      <MsiPackage
+        Compressed="no"
+        SourceFile="$(var.MsiSource)">
+        <MsiProperty Name="ADDLOCAL" Value="[Features_AddLocal]"/>
+        <MsiProperty Name="INSTALLDIR_CLIENT" Value="[ClientInstallDir]"/>
+        <!--<MsiProperty Name="" Value="[Client_DataDir]"/>-->
+        <MsiProperty Name="INSTALLDIR_SERVER" Value="[ServerInstallDir]"/>
+        <!--<MsiProperty Name="" Value="[Server_DataDir]"/>-->
+      </MsiPackage>
+    </Chain>
+  </Bundle>
+</Wix>
