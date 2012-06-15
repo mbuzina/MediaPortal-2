@@ -75,20 +75,9 @@ namespace MediaPortal.InstallerUI.Views
       Screens screen = (Screens)comboBox1.SelectedValue;
 
       Uri uri = (Uri)null;
-      switch (screen)
-      {
-        case Screens.InstallWelcomePage:
-          uri = new Uri("/MediaPortalBA;component/Views/InstallWelcomePage.xaml", UriKind.Relative);
-          break;
-        case Screens.InstallCustomizePage:
-          uri = new Uri("/MediaPortalBA;component/Views/InstallCustomizePage.xaml", UriKind.Relative);
-          break;
-        case Screens.UninstallWelcomePage:
-          uri = new Uri("/MediaPortalBA;component/Views/UninstallWelcomePage.xaml", UriKind.Relative);
-          break;
-      }
-
-      frame1.Navigate(uri);
+      uri = new Uri(String.Format("/MediaPortalBA;component/Views/{0}.xaml", screen), UriKind.Relative);
+      
+      PageFrame.Navigate(uri);
     }
 
     #endregion

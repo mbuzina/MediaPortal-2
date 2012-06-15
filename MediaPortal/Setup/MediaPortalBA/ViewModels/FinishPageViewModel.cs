@@ -1,6 +1,6 @@
 ﻿namespace MediaPortal.InstallerUI.ViewModels
 {
-  public class DonePageViewModel : BaseViewModel
+  public class FinishPageViewModel : BaseViewModel
   {
      
   }

@@ -4,6 +4,13 @@
   {
     InstallWelcomePage,
     InstallCustomizePage,
-    UninstallWelcomePage
+    InstallProgressPage,
+    UninstallWelcomePage,
+    UninstallProgressPage,
+    UpgradeWelcomePage,
+    UpgradeProgressPage,
+    FinishPage,
+    CancelPage,
+    ErrorPage,
   }
 }

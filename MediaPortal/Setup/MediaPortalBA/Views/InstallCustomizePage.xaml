@@ -1,65 +1,87 @@
 ﻿<Page x:Class="MediaPortal.InstallerUI.Views.InstallCustomizePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      >
+      xmlns:ux="clr-namespace:MediaPortal.InstallerUI.Views"
+      xmlns:iwpvm="clr-namespace:MediaPortal.InstallerUI.ViewModels">
 
-  <Grid>
+  <Page.Resources>
+    <ResourceDictionary>
+      <iwpvm:InstallCustomizePageViewModel x:Key="ViewModel" />
+    </ResourceDictionary>
+  </Page.Resources>
+
+  <Grid DataContext="{StaticResource ViewModel}">
     <Grid.RowDefinitions>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="30"/>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="30" />
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0">
       <Grid.RowDefinitions>
-        <RowDefinition Height="30"/>
-        <RowDefinition Height="30"/>
-        <RowDefinition Height="30"/>
-        <RowDefinition Height="30"/>
+        <RowDefinition Height="30" />
+        <RowDefinition Height="30" />
+        <RowDefinition Height="30" />
+        <RowDefinition Height="30" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="100"/>
-        <ColumnDefinition Width="200"/>
-        <ColumnDefinition Width="30"/>
+        <ColumnDefinition Width="100" />
+        <ColumnDefinition Width="200" />
+        <ColumnDefinition Width="30" />
       </Grid.ColumnDefinitions>
 
       <!-- Client install dir -->
-      <Label Grid.Row="0" Grid.Column="0">Client install dir:</Label>
-      <TextBox Grid.Row="0" Grid.Column="1"
-                   Text="{Binding ClientInstallDir}" />
-      <Button Grid.Row="0" Grid.Column="2"
-                Command="{Binding BrowseClientInstallDirCommand}"
-            >...</Button>
+      <Label Grid.Row="0"
+             Grid.Column="0"
+             Content="Client install dir:" />
+      <TextBox Grid.Row="0"
+               Grid.Column="1"
+               Text="{Binding ClientInstallDir}" />
+      <Button Grid.Row="0"
+              Grid.Column="2"
+              Command="{Binding BrowseClientInstallDirCommand}"
+              Content="..." />
 
       <!-- Server install dir -->
-      <Label Grid.Row="1" Grid.Column="0">Server install dir:</Label>
-      <TextBox Grid.Row="1" Grid.Column="1"
-                   Text="{Binding ClientInstallDir}" />
-      <Button Grid.Row="1" Grid.Column="2"
-                Command="{Binding BrowseServerInstallDirCommand}"
-            >...</Button>
+      <Label Grid.Row="1"
+             Grid.Column="0"
+             Content="Server install dir:" />
+      <TextBox Grid.Row="1"
+               Grid.Column="1"
+               Text="{Binding ClientInstallDir}" />
+      <Button Grid.Row="1"
+              Grid.Column="2"
+              Command="{Binding BrowseServerInstallDirCommand}"
+              Content="..." />
 
       <!-- Client data dir -->
-      <Label Grid.Row="2" Grid.Column="0">Client data dir:</Label>
-      <TextBox Grid.Row="2" Grid.Column="1"
-                   Text="{Binding ClientInstallDir}" />
-      <Button Grid.Row="2" Grid.Column="2"
-                Command="{Binding BrowseClientDataDirCommand}"
-            >...</Button>
+      <Label Grid.Row="2"
+             Grid.Column="0"
+             Content="Client data dir:" />
+      <TextBox Grid.Row="2"
+               Grid.Column="1"
+               Text="{Binding ClientInstallDir}" />
+      <Button Grid.Row="2"
+              Grid.Column="2"
+              Command="{Binding BrowseClientDataDirCommand}"
+              Content="..." />
 
       <!-- Server data dir -->
-      <Label Grid.Row="3" Grid.Column="0">Server data dir:</Label>
-      <TextBox Grid.Row="3" Grid.Column="1"
-                   Text="{Binding ClientInstallDir}" />
-      <Button Grid.Row="3" Grid.Column="2"
-                Command="{Binding BrowseServerDataDirCommand}"
-            >...</Button>
+      <Label Grid.Row="3"
+             Grid.Column="0"
+             Content="Server data dir:"/>
+      <TextBox Grid.Row="3"
+               Grid.Column="1"
+               Text="{Binding ClientInstallDir}" />
+      <Button Grid.Row="3"
+              Grid.Column="2"
+              Command="{Binding BrowseServerDataDirCommand}"
+              Content="..." />
 
     </Grid>
 
     <Button Grid.Row="1"
-                DataContext="{Binding InstallWelcomePageViewModel}"
-                Command="{Binding InstallCustomizePage}"
-            >Back</Button>
+            Command="{Binding BackCommand}"
+            Content="Back" />
 
   </Grid>
 </Page>

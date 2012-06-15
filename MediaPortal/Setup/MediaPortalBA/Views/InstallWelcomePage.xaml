@@ -1,15 +1,22 @@
 ﻿<Page x:Class="MediaPortal.InstallerUI.Views.InstallWelcomePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      >
+      xmlns:ux="clr-namespace:MediaPortal.InstallerUI.Views"
+      xmlns:iwpvm="clr-namespace:MediaPortal.InstallerUI.ViewModels">
+  
+  <Page.Resources>
+    <ResourceDictionary>
+      <iwpvm:InstallWelcomePageViewModel x:Key="ViewModel" />
+    </ResourceDictionary>
+  </Page.Resources>
 
-  <Grid>
+  <Grid DataContext="{StaticResource ViewModel}">
     <Grid.RowDefinitions>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="*"/>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="*" />
     </Grid.RowDefinitions>
 
     <!-- license checkbox -->
@@ -24,19 +31,16 @@
     </CheckBox>
 
     <Button Grid.Row="1"
-                DataContext="{Binding InstallWelcomePageViewModel}"
-                Command="{Binding InstallSingleSeatCommand}"
-            >Install Client+Server (Single Seat)</Button>
+            Command="{Binding InstallSingleSeatCommand}"
+            Content="Install Client+Server (Single Seat)" />
 
     <Button Grid.Row="2"
-                DataContext="{Binding InstallWelcomePageViewModel}"
-                Command="{Binding InstallClientOnlyCommand}"
-            >Client only</Button>
+            Command="{Binding InstallClientOnlyCommand}"
+            Content="Client only" />
 
     <Button Grid.Row="3"
-                DataContext="{Binding InstallWelcomePageViewModel}"
-                Command="{Binding InstallServerOnlyCommand}"
-            >Server only</Button>
+            Command="{Binding InstallServerOnlyCommand}"
+            Content="Server only" />
 
     <Label Grid.Row="4">
       <Hyperlink Command="{Binding CustomizeInstallCommand}">

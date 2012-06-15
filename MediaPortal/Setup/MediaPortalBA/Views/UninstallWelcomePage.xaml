@@ -1,9 +1,15 @@
 ﻿<Page x:Class="MediaPortal.InstallerUI.Views.UninstallWelcomePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      >
+      xmlns:iwpvm="clr-namespace:MediaPortal.InstallerUI.ViewModels">
+  
+  <Page.Resources>
+    <ResourceDictionary>
+      <iwpvm:UninstallWelcomePageViewModel x:Key="ViewModel" />
+    </ResourceDictionary>
+  </Page.Resources>
 
-  <Grid>
+  <Grid DataContext="{StaticResource ViewModel}">
     <Grid.RowDefinitions>
       <RowDefinition Height="*"/>
       <RowDefinition Height="*"/>
@@ -13,17 +19,17 @@
     <!-- RemoveSettings checkbox -->
     <CheckBox Grid.Row="0"
               IsChecked="{Binding RemoveSettings}"
-              >Remove settings</CheckBox>
+              Content="Remove settings" />
 
     <!-- UninstallDokan checkbox -->
     <CheckBox Grid.Row="1"
               IsChecked="{Binding UninstallDokan}"
-              >Uninstall Dokan</CheckBox>
+              Content="Uninstall Dokan"/>
 
     <!-- Uninstall button -->
     <Button Grid.Row="2"
             Command="{Binding UninstallCommand}"
-            >Uninstall</Button>
+            Content="Uninstall" />
 
   </Grid>
 </Page>

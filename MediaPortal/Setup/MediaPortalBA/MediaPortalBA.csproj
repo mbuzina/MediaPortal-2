@@ -65,7 +65,7 @@
     <Compile Include="Screens.cs" />
     <Compile Include="ViewModels\BaseProgressPageViewModel.cs" />
     <Compile Include="ViewModels\CancelPageViewModel.cs" />
-    <Compile Include="ViewModels\DonePageViewModel.cs" />
+    <Compile Include="ViewModels\FinishPageViewModel.cs" />
     <Compile Include="ViewModels\ErrorPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="ViewModels\UninstallProgressPageViewModel.cs" />
@@ -88,6 +88,27 @@
     <Compile Include="Views\InstallCustomizePage.xaml.cs">
       <DependentUpon>InstallCustomizePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\InstallProgressPage.xaml.cs">
+      <DependentUpon>InstallProgressPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorPage.xaml.cs">
+      <DependentUpon>ErrorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FinishPage.xaml.cs">
+      <DependentUpon>FinishPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CancelPage.xaml.cs">
+      <DependentUpon>CancelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UninstallProgressPage.xaml.cs">
+      <DependentUpon>UninstallProgressPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UpgradeProgressPage.xaml.cs">
+      <DependentUpon>UpgradeProgressPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UpgradeWelcomePage.xaml.cs">
+      <DependentUpon>UpgradeWelcomePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RootView.xaml.cs">
       <DependentUpon>RootView.xaml</DependentUpon>
     </Compile>
@@ -107,6 +128,42 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\InstallCustomizePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\InstallProgressPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ErrorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FinishPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CancelPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <None Include="Views\MediaPortalStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Views\other\Kopie von Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <Page Include="Views\UninstallProgressPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UpgradeProgressPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UpgradeWelcomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
