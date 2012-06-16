@@ -56,7 +56,7 @@
       <?define MsiSource  = "$(var.SolutionDir)MP2-Setup\bin\$(var.Configuration)\en-us\MP2-Setup.msi"?>
       <?endif?>
       
-      <!-- true -->
+      <!-- MediaPortal 2 msi package -->
       <MsiPackage
         Compressed="no"
         SourceFile="$(var.MsiSource)">

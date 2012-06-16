@@ -40,7 +40,9 @@ namespace MediaPortal.InstallerUI
     /// </summary>
     protected override void Run()
     {
+#if Debug
       MessageBox.Show("Attach debugger!");
+#endif
 
       try
       {
