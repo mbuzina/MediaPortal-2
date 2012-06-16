@@ -11,7 +11,7 @@
   <Grid>
     <Rectangle
       MouseLeftButtonDown="Background_MouseLeftButtonDown"
-      Fill="#D200003E"
+      Fill="LightSkyBlue"
       Grid.ColumnSpan="1"
       Grid.Row="1"
       />
@@ -22,7 +22,7 @@
            HorizontalAlignment="Left"
            VerticalAlignment="Top"
            />
-
+    
     <Button Content="_"
             Command="{Binding MinimizeCommand}"
             Height="23"
