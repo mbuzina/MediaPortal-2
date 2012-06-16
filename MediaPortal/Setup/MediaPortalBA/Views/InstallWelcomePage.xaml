@@ -3,25 +3,17 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:ux="clr-namespace:MediaPortal.InstallerUI.Views"
       xmlns:iwpvm="clr-namespace:MediaPortal.InstallerUI.ViewModels">
-  
+
   <Page.Resources>
     <ResourceDictionary>
       <iwpvm:InstallWelcomePageViewModel x:Key="ViewModel" />
     </ResourceDictionary>
   </Page.Resources>
 
-  <Grid DataContext="{StaticResource ViewModel}">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="*" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
+  <StackPanel DataContext="{StaticResource ViewModel}">
 
     <!-- license checkbox -->
-    <CheckBox Grid.Row="0"
-              IsChecked="{Binding AcceptedLicense}">
+    <CheckBox IsChecked="{Binding AcceptedLicense}">
       <TextBlock>
             I accept the 
             <Hyperlink Command="{Binding ViewLicenseCommand}">
@@ -30,23 +22,24 @@
           </TextBlock>
     </CheckBox>
 
-    <Button Grid.Row="1"
+    <Button Content="Install Client+Server (Single Seat)"
             Command="{Binding InstallSingleSeatCommand}"
-            Content="Install Client+Server (Single Seat)" />
+            IsEnabled="{Binding AcceptedLicense}" />
 
-    <Button Grid.Row="2"
+    <Button Content="Client only"
             Command="{Binding InstallClientOnlyCommand}"
-            Content="Client only" />
+            IsEnabled="{Binding AcceptedLicense}" />
 
-    <Button Grid.Row="3"
+    <Button Content="Server only"
             Command="{Binding InstallServerOnlyCommand}"
-            Content="Server only" />
+            IsEnabled="{Binding AcceptedLicense}" />
 
-    <Label Grid.Row="4">
-      <Hyperlink Command="{Binding CustomizeInstallCommand}">
+    <Label>
+      <Hyperlink Command="{Binding CustomizeInstallCommand}"
+                 IsEnabled="{Binding AcceptedLicense}">
         <TextBlock>Customize installation...</TextBlock>
       </Hyperlink>
     </Label>
 
-  </Grid>
+  </StackPanel>
 </Page>
