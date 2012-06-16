@@ -57,7 +57,7 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     private void CustomizeInstall()
     {
-      MessageBox.Show("CustomizeInstall");
+      MediaPortalBA.View.GotoScreen(Screens.InstallCustomizePage);
     }
 
     private void InstallSingleSeat()

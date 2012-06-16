@@ -9,11 +9,11 @@ namespace MediaPortal.InstallerUI.ViewModels
   {
     #region Members
 
-    private string _clientInstallDir;
-    private string _serverInstallDir;
+    private static string _clientInstallDir;
+    private static string _serverInstallDir;
 
-    private string _clientDataDir;
-    private string _serverDataDir;
+    private static string _clientDataDir;
+    private static string _serverDataDir;
 
     #endregion
 
@@ -21,13 +21,13 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     public string ClientInstallDir
     {
-      get { return this._clientInstallDir; }
+      get { return InstallCustomizePageViewModel._clientInstallDir; }
 
       set
       {
-        if (this._clientInstallDir != value)
+        if (InstallCustomizePageViewModel._clientInstallDir != value)
         {
-          this._clientInstallDir = value;
+          InstallCustomizePageViewModel._clientInstallDir = value;
           base.OnPropertyChanged("ClientInstallDir");
         }
       }
@@ -35,13 +35,13 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     public string ServerInstallDir
     {
-      get { return this._serverInstallDir; }
+      get { return InstallCustomizePageViewModel._serverInstallDir; }
 
       set
       {
-        if (this._serverInstallDir != value)
+        if (InstallCustomizePageViewModel._serverInstallDir != value)
         {
-          this._serverInstallDir = value;
+          InstallCustomizePageViewModel._serverInstallDir = value;
           base.OnPropertyChanged("ServerInstallDir");
         }
       }
@@ -49,13 +49,13 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     public string ClientDataDir
     {
-      get { return this._clientDataDir; }
+      get { return InstallCustomizePageViewModel._clientDataDir; }
 
       set
       {
-        if (this._clientDataDir != value)
+        if (InstallCustomizePageViewModel._clientDataDir != value)
         {
-          this._clientDataDir = value;
+          InstallCustomizePageViewModel._clientDataDir = value;
           base.OnPropertyChanged("ClientDataDir");
         }
       }
@@ -63,13 +63,13 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     public string ServerDataDir
     {
-      get { return this._serverDataDir; }
+      get { return InstallCustomizePageViewModel._serverDataDir; }
 
       set
       {
-        if (this._serverDataDir != value)
+        if (InstallCustomizePageViewModel._serverDataDir != value)
         {
-          this._serverDataDir = value;
+          InstallCustomizePageViewModel._serverDataDir = value;
           base.OnPropertyChanged("ServerDataDir");
         }
       }
@@ -104,7 +104,7 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     private void DoBackCommand()
     {
-      MessageBox.Show("DoBackCommand");
+      MediaPortalBA.View.GotoScreen(Screens.InstallWelcomePage);
     }
 
     private void BrowseClientInstallDir()

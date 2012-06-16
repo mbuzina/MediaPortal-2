@@ -1,9 +1,19 @@
 ﻿<Page x:Class="MediaPortal.InstallerUI.Views.CancelPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      >
+      xmlns:iwpvm="clr-namespace:MediaPortal.InstallerUI.ViewModels">
 
-  <Grid>
+  <Page.Resources>
+    <ResourceDictionary>
+      <iwpvm:CancelPageViewModel x:Key="ViewModel" />
+    </ResourceDictionary>
+  </Page.Resources>
 
-  </Grid>
+  <StackPanel DataContext="{StaticResource ViewModel}">
+    <Label Content="Do you really want to cancel installation?" />
+    <Button Content="Yes"
+            Command="{Binding CancelCommand}" />
+    <Button Content="No"
+            Command="{Binding ContinueCommand}" />
+  </StackPanel>
 </Page>
