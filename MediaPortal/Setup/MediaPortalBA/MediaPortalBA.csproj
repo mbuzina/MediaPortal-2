@@ -60,6 +60,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Hresult.cs" />
     <Compile Include="InstallMode.cs" />
     <Compile Include="Screens.cs" />

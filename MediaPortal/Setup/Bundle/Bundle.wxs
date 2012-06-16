@@ -35,15 +35,15 @@
     <Variable Name='ClientInstallDir'
               Type='string'
               Value='[ProgramFilesFolder]Team MediaPortal\MP2-Client'/>
-    <!--<Variable Name='ClientDataDir'
+    <Variable Name='ClientDataDir'
               Type='string'
-              Value='[CommonAppDataFolder]Team MediaPortal\MP2-Client'/>-->
+              Value='[CommonAppDataFolder]Team MediaPortal\MP2-Client'/>
     <Variable Name='ServerInstallDir'
               Type='string'
               Value='[ProgramFilesFolder]Team MediaPortal\MP2-Server'/>
-    <!--<Variable Name='ServerDataDir'
+    <Variable Name='ServerDataDir'
               Type='string'
-              Value='[CommonAppDataFolder]Team MediaPortal\MP2-Server'/>-->
+              Value='[CommonAppDataFolder]Team MediaPortal\MP2-Server'/>
     
     <Chain>
       <PackageGroupRef Id='NetFx40Web' />

@@ -11,7 +11,13 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     #region ICommands
 
+    /// <summary>
+    /// Command that closes the main window
+    /// </summary>
     public ICommand CloseCommand { get; private set; }
+    /// <summary>
+    /// Command that minimizes the main window to taskbar.
+    /// </summary>
     public ICommand MinimizeCommand { get; private set; }
 
     #endregion

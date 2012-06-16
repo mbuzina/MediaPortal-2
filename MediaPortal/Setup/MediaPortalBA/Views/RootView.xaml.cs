@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using MediaPortal.InstallerUI.ViewModels;
+using Microsoft.Tools.WindowsInstallerXml.Bootstrapper;
 
 namespace MediaPortal.InstallerUI.Views
 {
@@ -64,7 +65,12 @@ namespace MediaPortal.InstallerUI.Views
     /// <param name="newScreen"></param>
     public void GotoScreen(Screens newScreen)
     {
-      OnChangeScreen(new ChangeScreenEventArgs(){Screen = newScreen});
+      if (base.Dispatcher == null || base.Dispatcher.HasShutdownFinished || base.Dispatcher.HasShutdownStarted)
+        return;
+
+      MediaPortalBA.Model.Engine.Log(LogLevel.Verbose, "ScreenNavigation: GoTo " + newScreen);
+      base.Dispatcher.Invoke(new ChangeScreenCallback(this.ChangeScreen),
+                             new object[] { newScreen });
     }
 
     /// <summary>
@@ -73,20 +79,9 @@ namespace MediaPortal.InstallerUI.Views
     public void GoToPreviousScreen()
     {
       if (PreviousScreen == Screens.NotDefined) return;
+
+      MediaPortalBA.Model.Engine.Log(LogLevel.Verbose, "ScreenNavigation: GoToPreviousScreen");
       GotoScreen(PreviousScreen);
-    }
-
-    /// <summary>
-    /// This method has to be called when a screen should be changed.
-    /// </summary>
-    /// <param name="args"></param>
-    private void OnChangeScreen(ChangeScreenEventArgs args)
-    {
-      if (base.Dispatcher == null || base.Dispatcher.HasShutdownFinished || base.Dispatcher.HasShutdownStarted)
-        return;
-
-      base.Dispatcher.Invoke(new ChangeScreenCallback(this.ChangeScreen),
-                             new object[] { args.Screen });
     }
 
     /// <summary>
@@ -101,6 +96,8 @@ namespace MediaPortal.InstallerUI.Views
         PreviousScreen = CurrentScreen;
       else
         PreviousScreen = Screens.NotDefined;
+
+      MediaPortalBA.Model.Engine.Log(LogLevel.Verbose, "ScreenNavigation: Screen changed to " + newScreen);
 
       Uri uri = (Uri)null;
       uri = new Uri(String.Format("/MediaPortalBA;component/Views/{0}.xaml", newScreen), UriKind.Relative);
@@ -188,7 +185,7 @@ namespace MediaPortal.InstallerUI.Views
       // TODO: chefkoch, remove later as it is only for testing
       Screens screen = (Screens)comboBox1.SelectedValue;
 
-      OnChangeScreen(new ChangeScreenEventArgs() { Screen = screen });
+      GotoScreen(screen);
     }
 
     #endregion

@@ -15,6 +15,9 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     #region Properties
 
+    /// <summary>
+    /// Property that indicates, whether the license has been accepted or not.
+    /// </summary>
     public bool AcceptedLicense
     {
       get { return InstallWelcomePageViewModel._acceptedLicense; }
@@ -29,11 +32,26 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     #region ICommands
 
+    /// <summary>
+    /// Command to display the licese to the user.
+    /// </summary>
     public ICommand ViewLicenseCommand { get; private set; }
+    /// <summary>
+    /// Command to customize the installation settings. This will open the InstallCustomizePage.
+    /// </summary>
     public ICommand CustomizeInstallCommand { get; private set; }
-    
+
+    /// <summary>
+    /// Command to start the installation and install Client & Server
+    /// </summary>
     public ICommand InstallSingleSeatCommand { get; private set; }
+    /// <summary>
+    /// Command to start the installation and install Client only
+    /// </summary>
     public ICommand InstallClientOnlyCommand { get; private set; }
+    /// <summary>
+    /// Command to start the installation and install Client server only
+    /// </summary>
     public ICommand InstallServerOnlyCommand { get; private set; }
 
     #endregion

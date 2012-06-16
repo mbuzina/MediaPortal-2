@@ -15,6 +15,9 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     #region Properties
 
+    /// <summary>
+    /// Property that holds the information, whether MP2 settings should also be removed during MP2 uninstallation.
+    /// </summary>
     public bool RemoveSettings
     {
       get { return UninstallWelcomePageViewModel._removeSettings; }
@@ -25,6 +28,9 @@ namespace MediaPortal.InstallerUI.ViewModels
       }
     }
 
+    /// <summary>
+    /// Property that holds the information, whether Dokan should also be removed during MP2 uninstallation.
+    /// </summary>
     public bool UninstallDokan
     {
       get { return UninstallWelcomePageViewModel._uninstallDokan; }
@@ -39,6 +45,9 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     #region ICommands
 
+    /// <summary>
+    /// Command that starts the uninstallation.
+    /// </summary>
     public ICommand UninstallCommand { get; private set; }
 
     #endregion

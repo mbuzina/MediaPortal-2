@@ -19,6 +19,9 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     #region Properties
 
+    /// <summary>
+    /// Property that holds the path, where the client will be installed to.
+    /// </summary>
     public string ClientInstallDir
     {
       get { return InstallCustomizePageViewModel._clientInstallDir; }
@@ -33,6 +36,9 @@ namespace MediaPortal.InstallerUI.ViewModels
       }
     }
 
+    /// <summary>
+    /// Property that holds the path, where the server will be installed to.
+    /// </summary>
     public string ServerInstallDir
     {
       get { return InstallCustomizePageViewModel._serverInstallDir; }
@@ -47,6 +53,9 @@ namespace MediaPortal.InstallerUI.ViewModels
       }
     }
 
+    /// <summary>
+    /// Property that holds the path, client will save it's settings.
+    /// </summary>
     public string ClientDataDir
     {
       get { return InstallCustomizePageViewModel._clientDataDir; }
@@ -61,6 +70,9 @@ namespace MediaPortal.InstallerUI.ViewModels
       }
     }
 
+    /// <summary>
+    /// Property that holds the path, server will save it's settings.
+    /// </summary>
     public string ServerDataDir
     {
       get { return InstallCustomizePageViewModel._serverDataDir; }
@@ -79,23 +91,42 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     #region ICommands
 
+    /// <summary>
+    /// Command to go back to the Welcome page
+    /// </summary>
     public ICommand BackCommand { get; private set; }
 
+    /// <summary>
+    /// Command opens a dialog to browse for the folder and change <see cref="ClientInstallDir"/>
+    /// </summary>
     public ICommand BrowseClientInstallDirCommand { get; private set; }
+    /// <summary>
+    /// Command opens a dialog to browse for the folder and change <see cref="ServerInstallDir"/>
+    /// </summary>
     public ICommand BrowseServerInstallDirCommand { get; private set; }
 
+    /// <summary>
+    /// Command opens a dialog to browse for the folder and change <see cref="ClientDataDir"/>
+    /// </summary>
     public ICommand BrowseClientDataDirCommand { get; private set; }
+    /// <summary>
+    /// Command opens a dialog to browse for the folder and change <see cref="ServerDataDir"/>
+    /// </summary>
     public ICommand BrowseServerDataDirCommand { get; private set; }
 
     #endregion
 
     public InstallCustomizePageViewModel()
     {
+      this.ClientInstallDir = MediaPortalBA.Model.Engine.StringVariables[Constants.VariableNames.ClientInstallDir];
+      this.ServerInstallDir = MediaPortalBA.Model.Engine.StringVariables[Constants.VariableNames.ServerInstallDir];
+      this.ClientDataDir = MediaPortalBA.Model.Engine.StringVariables[Constants.VariableNames.ClientDataDir];
+      this.ServerDataDir = MediaPortalBA.Model.Engine.StringVariables[Constants.VariableNames.ServerDataDir];
+
       this.BackCommand = new RelayCommand(param => this.DoBackCommand());
 
       this.BrowseClientInstallDirCommand = new RelayCommand(param => this.BrowseClientInstallDir());
       this.BrowseServerInstallDirCommand = new RelayCommand(param => this.BrowseServerInstallDir());
-
       this.BrowseClientDataDirCommand = new RelayCommand(param => this.BrowseClientDataDir());
       this.BrowseServerDataDirCommand = new RelayCommand(param => this.BrowseServerDataDir());
     }

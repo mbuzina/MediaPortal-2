@@ -46,15 +46,16 @@ namespace MediaPortal.InstallerUI
 
       try
       {
-        this.Engine.Log(LogLevel.Verbose, "Running the MpBootstrapperApplication.");
+        this.Engine.Log(LogLevel.Verbose, "MediaPortalBA: Running the MediaPortalBA.");
         MediaPortalBA.Model = new Model(this);
         MediaPortalBA.Dispatcher = Dispatcher.CurrentDispatcher;
         
         ViewModel viewModel = new ViewModel();
         viewModel.Initialize();
-        this.Engine.Log(LogLevel.Verbose, "Wait for Detect to complete");
+        this.Engine.Log(LogLevel.Verbose, "MediaPortalBA: Wait for Detect to complete");
+        // TODO: chefkoch, wait for detect to complete
         //viewModel.WaitForDetectComplete();
-        this.Engine.Log(LogLevel.Verbose, "Detect Completed, now create view");
+        this.Engine.Log(LogLevel.Verbose, "MediaPortalBA: Detect Completed, now create view");
         
         MediaPortalBA.View = new RootView(viewModel);
         MediaPortalBA.View.Run();
