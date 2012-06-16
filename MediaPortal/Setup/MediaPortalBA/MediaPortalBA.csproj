@@ -24,7 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -63,6 +63,7 @@
     <Compile Include="Hresult.cs" />
     <Compile Include="InstallMode.cs" />
     <Compile Include="Screens.cs" />
+    <Compile Include="ChangeScreenEventArgs.cs" />
     <Compile Include="ViewModels\BaseProgressPageViewModel.cs" />
     <Compile Include="ViewModels\CancelPageViewModel.cs" />
     <Compile Include="ViewModels\FinishPageViewModel.cs" />
