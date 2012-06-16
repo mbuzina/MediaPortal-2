@@ -2,6 +2,7 @@
 {
   public enum Screens
   {
+    NotDefined,
     InstallWelcomePage,
     InstallCustomizePage,
     InstallProgressPage,
