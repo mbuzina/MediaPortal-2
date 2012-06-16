@@ -123,8 +123,10 @@ namespace MediaPortal.InstallerUI.Views
 
       // todo: remove combobox handling later, as it is only for testing
       comboBox1.Items.Clear();
-      foreach (var screen in Enum.GetValues(typeof(Screens)))
+      foreach (Screens screen in Enum.GetValues(typeof(Screens)))
       {
+        if (screen == Screens.NotDefined) continue;
+
         comboBox1.Items.Add(screen);
       }
     }
