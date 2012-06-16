@@ -13,15 +13,13 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     public ICommand CloseCommand { get; private set; }
     public ICommand MinimizeCommand { get; private set; }
-    public ICommand CancelPromptCommand { get; private set; }
 
     #endregion
 
     public ViewModel()
     {
-      this.CloseCommand = new RelayCommand(param => CancelPrompt());
+      this.CloseCommand = new RelayCommand(param => MediaPortalBA.View.Close());
       this.MinimizeCommand = new RelayCommand(param => MediaPortalBA.View.Minimize());
-      this.CancelPromptCommand = new RelayCommand(param => CancelPrompt());
     }
 
     #region Implementation
@@ -31,16 +29,6 @@ namespace MediaPortal.InstallerUI.ViewModels
     public void Initialize()
     {
       MediaPortalBA.Model.Engine.Detect();
-    }
-
-    private void CancelPrompt()
-    {
-      MessageBoxResult result = MessageBox.Show("Do you really want to cancel?", "CancelPrompt", MessageBoxButton.YesNo);
-
-      if (result == MessageBoxResult.Yes)
-      {
-        MediaPortalBA.View.Close();
-      }
     }
   }
 }
