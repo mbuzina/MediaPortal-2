@@ -1,8 +1,18 @@
 ﻿<Page x:Class="MediaPortal.InstallerUI.Views.UpgradeProgressPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      >
+      xmlns:ux="clr-namespace:MediaPortal.InstallerUI.Views"
+      xmlns:iwpvm="clr-namespace:MediaPortal.InstallerUI.ViewModels">
 
-  <Grid>
-  </Grid>
+  <Page.Resources>
+    <ResourceDictionary>
+      <iwpvm:UpgradeProgressPageViewModel x:Key="ViewModel" />
+    </ResourceDictionary>
+  </Page.Resources>
+
+  <StackPanel DataContext="{StaticResource ViewModel}">
+    <Label Content="{Binding StatusText}" />
+    <ProgressBar Height="20"
+                 Value="{Binding ProgressValue}" />
+  </StackPanel>
 </Page>

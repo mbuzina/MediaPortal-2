@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Windows.Input;
-using MessageBox = System.Windows.MessageBox;
 
 namespace MediaPortal.InstallerUI.ViewModels
 {
@@ -118,6 +117,8 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     public InstallCustomizePageViewModel()
     {
+      if (this.IsInDesignMode) return;
+
       this.ClientInstallDir = MediaPortalBA.Model.Engine.StringVariables[Constants.VariableNames.ClientInstallDir];
       this.ServerInstallDir = MediaPortalBA.Model.Engine.StringVariables[Constants.VariableNames.ServerInstallDir];
       this.ClientDataDir = MediaPortalBA.Model.Engine.StringVariables[Constants.VariableNames.ClientDataDir];

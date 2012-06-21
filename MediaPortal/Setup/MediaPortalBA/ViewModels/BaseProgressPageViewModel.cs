@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-
-namespace MediaPortal.InstallerUI.ViewModels
+﻿namespace MediaPortal.InstallerUI.ViewModels
 {
   public class BaseProgressPageViewModel : BaseViewModel
   {
@@ -44,6 +41,12 @@ namespace MediaPortal.InstallerUI.ViewModels
 
     public BaseProgressPageViewModel()
     {
+      if (this.IsInDesignMode)
+      {
+        this.StatusText = "This is an example status text.";
+        this.ProgressValue = 66;
+        return;
+      }
     }
 
     #region Implementation

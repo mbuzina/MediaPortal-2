@@ -1,8 +1,8 @@
 ﻿namespace MediaPortal.InstallerUI
 {
-  public class Constants
+  public static class Constants
   {
-    public class VariableNames
+    public static class VariableNames
     {
       public const string FeaturesAddLocal = "Features_AddLocal";
 
