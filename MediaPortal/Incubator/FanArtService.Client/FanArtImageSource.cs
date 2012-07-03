@@ -39,7 +39,6 @@ namespace MediaPortal.Extensions.UserServices.FanArtService.Client
   {
     #region Protected fields
 
-    protected TextureAsset _texture;
     protected AbstractProperty _fanArtMediaTypeProperty;
     protected AbstractProperty _fanArtTypeProperty;
     protected AbstractProperty _fanArtNameProperty;
