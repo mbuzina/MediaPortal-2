@@ -7,7 +7,45 @@ Default background image - no media present
 <Screen
     xmlns="www.team-mediaportal.com/2008/mpf/directx"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fanart="clr-namespace:MediaPortal.Extensions.UserServices.FanArtService.Client;assembly=FanArtService.Client"
     x:Name="DefaultBackgroundScreen"
     >
-  <StackPanel Background="{ThemeResource BackgroundBrush}"/>
+  
+  <DockPanel  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+    <!-- Overlay of fanart -->
+    <StackPanel DockPanel.Dock="Center">
+      <StackPanel.Background>
+        <VisualBrush x:Name="FanartVisualBrush">
+          <VisualBrush.Visual>
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+              <Grid.Resources>
+                <Model x:Key="FanArtBackgroundModel" Id="8F42C8E9-E8A3-475C-A50A-99E1E644DC91"/>
+              </Grid.Resources>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+              </Grid.RowDefinitions>
+              <Image x:Name="FanArtImageBackground" VerticalAlignment="Stretch" Stretch="Uniform" Grid.Row="0" Grid.Column="0" FallbackSource="Reflex.jpg">
+                <Image.Source>
+                  <MultiImageSource Transition="transitions\granular_dissolve;transitions\fade;transitions\dissolve;transitions\wipe_right;transitions\wipe_down;transitions\wipe_down-right;transitions\wipe_up-left"
+                    TransitionInOut="False" TransitionDuration="0.5" Wait="false">
+                    <MultiImageSource.ImageSource>
+                      <fanart:FanArtImageSource 
+                        fanart:FanArtMediaType="{Binding Source={StaticResource FanArtBackgroundModel}, Path=FanArtMediaType}" 
+                        fanart:FanArtType="FanArt" 
+                        fanart:FanArtName="{Binding Source={StaticResource FanArtBackgroundModel}, Path=FanArtName}"
+                        fanart:MaxWidth="1920" fanart:MaxHeight="1080"/>
+                    </MultiImageSource.ImageSource>
+                  </MultiImageSource>
+                </Image.Source>
+              </Image>
+            </Grid>
+          </VisualBrush.Visual>
+        </VisualBrush>
+      </StackPanel.Background>
+    </StackPanel>
+    
+  </DockPanel>
 </Screen>
