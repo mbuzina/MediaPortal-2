@@ -75,6 +75,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Source\Core\MediaPortal.Common\VersionInfo\VersionInfo.cs">
+      <Link>Properties\VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Helpers\ChannelProgramListItem.cs" />
     <Compile Include="Helpers\ProgramListItem.cs" />
