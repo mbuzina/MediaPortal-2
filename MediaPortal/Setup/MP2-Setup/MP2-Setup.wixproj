@@ -30,6 +30,9 @@
     </LinkerAdditionalOptions>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="..\VersionInfo.wxi">
+      <Link>VersionInfo.wxi</Link>
+    </Content>
     <Compile Include="Client\ClientFeatures.wxs" />
     <Compile Include="Dokan\Dokan.wxs" />
     <Compile Include="Fragments\AddRemoveProperties.wxs" />
