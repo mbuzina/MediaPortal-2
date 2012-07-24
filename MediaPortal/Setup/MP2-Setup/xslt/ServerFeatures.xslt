@@ -44,8 +44,6 @@
 
       <ComponentRef Id="MP2Server" />
       <ComponentRef Id="MP2Server.config" />
-      <ComponentRef Id="MP2Server.Desktop.Shortcut" />
-      <ComponentRef Id="MP2Server.StartMenu.Shortcut" />
 
       <ComponentRef Id="S__HttpServer" />
       <ComponentRef Id="S__log4net" />
