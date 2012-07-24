@@ -6,7 +6,7 @@
   <Fragment>
 
     <?include ..\Includes.wxi ?>
-    <?define OutDirServiceMonitor="$(var.OutDirRoot)\MP2-ServiceMonitor\bin\x86\Release" ?>
+    <?define OutDirServiceMonitor="$(var.SolutionDir)..\Bin\MP2-ServiceMonitor\bin\x86\Release" ?>
 
     <!-- Icon -->
     <Icon Id="ServiceMonitor" SourceFile="$(var.OutDirServiceMonitor)\MP2-ServiceMonitor.exe" />
