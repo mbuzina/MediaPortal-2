@@ -261,8 +261,11 @@ namespace TransifexHelper
       foreach (KeyValuePair<string, DirectoryInfo> pair in languageDirectories)
       {
         string inputDir = TransifexCacheFolder + "\\" + pair.Key;
+        DirectoryInfo sourceDir = new DirectoryInfo(inputDir);
+        if (!sourceDir.Exists)
+          continue;
 
-        foreach (FileInfo langFile in new DirectoryInfo(inputDir).GetFiles())
+        foreach (FileInfo langFile in sourceDir.GetFiles())
         {
           if (langFile.Name.ToLower().Equals("strings_en.xml"))
             continue;
