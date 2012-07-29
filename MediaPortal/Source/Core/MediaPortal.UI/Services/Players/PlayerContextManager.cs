@@ -153,7 +153,7 @@ namespace MediaPortal.UI.Services.Players
             Guid stateId = context.WorkflowState.StateId;
             Guid? potentialState = GetPotentialCPStateId();
             if (potentialState == stateId)
-              lock(SyncObj)
+              lock (SyncObj)
                 _playerWfStateInstances.Add(new PlayerWFStateInstance(PlayerWFStateType.CurrentlyPlaying, stateId));
             potentialState = GetPotentialFSCStateId();
             if (potentialState == stateId)
@@ -578,6 +578,7 @@ namespace MediaPortal.UI.Services.Players
         Guid currentlyPlayingWorkflowStateId, Guid fullscreenContentWorkflowStateId)
     {
       IPlayerManager playerManager = ServiceRegistration.Get<IPlayerManager>();
+      bool switchPipRequired = false;
       lock (playerManager.SyncObj)
       {
         IList<IPlayerContext> playerContexts = new List<IPlayerContext>(2);
@@ -617,12 +618,24 @@ namespace MediaPortal.UI.Services.Players
             }
             break;
           case PlayerContextConcurrencyMode.ConcurrentVideo:
+            // If we have 2 concurrent playing videos, a new video will replace the primary slot, PiP remains untouched playing in background
+            // If we have only one video playing, the new video will be added to secondary slot and the PiP players will be switched: the old
+            // playing video will be moved to PiP, the new will get fullscreen video.
             if (numActive >= 1 && playerContexts[0].AVType == AVType.Video)
-            { // The primary slot is a video player slot
+            {
+              int newCurrentPlayerIndex = PlayerManagerConsts.SECONDARY_SLOT;
+              // The primary slot is a video player slot
               if (numActive > 1)
+              {
+                SwitchPipPlayers();
                 playerManager.CloseSlot(PlayerManagerConsts.SECONDARY_SLOT);
+                newCurrentPlayerIndex = PlayerManagerConsts.PRIMARY_SLOT;
+              }
+              switchPipRequired = true;
+
               playerManager.OpenSlot(out slotIndex, out slotController);
-              playerManager.AudioSlotIndex = PlayerManagerConsts.PRIMARY_SLOT;
+              playerManager.AudioSlotIndex = PlayerManagerConsts.SECONDARY_SLOT;
+              CurrentPlayerIndex = newCurrentPlayerIndex;
             }
             else
             {
@@ -638,8 +651,12 @@ namespace MediaPortal.UI.Services.Players
             playerManager.AudioSlotIndex = PlayerManagerConsts.PRIMARY_SLOT;
             break;
         }
-        return new PlayerContext(this, slotController, mediaModuleId, name, AVType.Video,
-            currentlyPlayingWorkflowStateId, fullscreenContentWorkflowStateId);
+        PlayerContext newPlayerContext = new PlayerContext(this, slotController, mediaModuleId, name, AVType.Video,
+          currentlyPlayingWorkflowStateId, fullscreenContentWorkflowStateId);
+
+        if (switchPipRequired)
+          SwitchPipPlayers();
+        return newPlayerContext;
       }
     }
 
