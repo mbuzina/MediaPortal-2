@@ -64,7 +64,9 @@ namespace MediaPortal.Common.ResourceAccess
 
     public static string GetDirectoryName(string path)
     {
-      path = StringUtils.RemoveSuffixIfPresent(path, "/");
+      // Do not remove root folder of chained resource paths
+      if (!path.EndsWith(":///"))
+        path = StringUtils.RemoveSuffixIfPresent(path, "/");
       int index = path.LastIndexOf('/');
       return path.Substring(0, index + 1);
     }
